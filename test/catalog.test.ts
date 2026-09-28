@@ -104,11 +104,16 @@ describe("buildModels", () => {
 	
 	it("preserves configured model additions and overrides", () => {
 		const providerID = Provider.ID.make("laiya")
-		const discovered = buildModels([{id: "gpt-6-luna", owned_by: "codex"}])
+		const discovered = buildModels([{
+			id: "gpt-6-luna",
+			owned_by: "codex",
+			laiya: {reasoning: {supported_efforts: ["low", "medium"]}},
+		}])
 		const override: Model.Info = {
 			...Model.Info.default(providerID, Model.ID.make("gpt-6-luna")),
 			name: "Custom Luna",
 			package: "@opencode/ai/providers/openai/chat",
+			body: {reasoning_effort: "none"},
 		}
 		const manual = Model.Info.default(providerID, Model.ID.make("private-model"))
 		
@@ -117,5 +122,7 @@ describe("buildModels", () => {
 		assert.deepEqual(merged.map((model) => model.id), ["gpt-6-luna", "private-model"])
 		assert.equal(merged[0].name, "Custom Luna")
 		assert.equal(merged[0].package, "@opencode/ai/providers/openai/chat")
+		assert.deepEqual(merged[0].body, {reasoning_effort: "none"})
+		assert.deepEqual(merged[0].variants.map((variant) => variant.id), ["low", "medium"])
 	})
 })

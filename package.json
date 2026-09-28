@@ -1,6 +1,6 @@
 {
 	"name": "@socketry/opencode-provider-laiya",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "OpenCode plugin for dynamically discovering Laiya models.",
 	"license": "MIT",
 	"type": "module",

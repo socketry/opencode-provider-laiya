@@ -113,7 +113,23 @@ export function buildModels(catalog: LaiyaModel[], providerID = "laiya"): Model.
 /** Preserve explicitly configured models and overrides alongside discovered models. */
 export function mergeModels(discovered: Model.Info[], configured: Iterable<Model.Info>): Model.Info[] {
 	const models = new Map(discovered.map((model) => [model.id, model]))
-	for (const model of configured) models.set(model.id, model)
+	for (const model of configured) {
+		const discoveredModel = models.get(model.id)
+		if (!discoveredModel) {
+			models.set(model.id, model)
+			continue
+		}
+		
+		models.set(model.id, {
+			...discoveredModel,
+			...model,
+			settings: {...discoveredModel.settings, ...model.settings},
+			headers: {...discoveredModel.headers, ...model.headers},
+			body: {...discoveredModel.body, ...model.body},
+			variants: model.variants.length > 0 ? model.variants : discoveredModel.variants,
+		})
+	}
+	
 	return [...models.values()]
 }
 
