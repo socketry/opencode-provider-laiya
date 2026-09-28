@@ -1,0 +1,52 @@
+{
+	"name": "@socketry/opencode-provider-laiya",
+	"version": "0.1.0",
+	"description": "OpenCode plugin for dynamically discovering Laiya models.",
+	"license": "MIT",
+	"type": "module",
+	"engines": {
+		"node": ">=20"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/socketry/opencode-provider-laiya.git"
+	},
+	"homepage": "https://github.com/socketry/opencode-provider-laiya#readme",
+	"bugs": {
+		"url": "https://github.com/socketry/opencode-provider-laiya/issues"
+	},
+	"keywords": [
+		"opencode",
+		"opencode-plugin",
+		"laiya",
+		"openai-compatible"
+	],
+	"files": [
+		"dist",
+		"readme.md",
+		"LICENSE"
+	],
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "tsc -p tsconfig.build.json",
+		"typecheck": "tsc --noEmit -p tsconfig.json",
+		"test": "npm run typecheck && tsx --test test/*.test.ts",
+		"prepack": "npm run build"
+	},
+	"dependencies": {
+		"@opencode/plugin": "2.0.18"
+	},
+	"devDependencies": {
+		"@types/node": "^24.0.0",
+		"tsx": "^4.19.0",
+		"typescript": "^5.8.0"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}
